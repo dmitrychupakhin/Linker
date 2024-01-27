@@ -1,1 +1,4 @@
 linker_django/venv
+linker_django/db.sqlite3
+linker_django/media
+
