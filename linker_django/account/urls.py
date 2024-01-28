@@ -8,4 +8,7 @@ urlpatterns = [
     path('account/<int:user_id>/photo/<int:photo_id>/', AccountPhotoRetrieveDestroyView.as_view(), name='account_photo_detail'),
     path('account/<int:user_id>/subscription/', SubscriptionListCreateView.as_view(), name='account_subscription'),
     path('account/<int:user_id>/subscription/<int:id>/', SubscriptionDetailView.as_view(), name='account_subscription_detail'),
+    path('account/<int:user_id>/subscribers/', SubscribersListView.as_view(), name='account_subscribers'),
+    path('account/<int:user_id>/subscribers/<int:id>/', SubscribersDetailView.as_view(), name='account_subscribers_dateil')
+
 ]

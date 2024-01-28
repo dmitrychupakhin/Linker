@@ -8,3 +8,5 @@
    ```bash
    python manage.py runserver
 
+3. **Документация API**
+   http://localhost:8000/api/v1/schema/swagger-ui/

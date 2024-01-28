@@ -17,7 +17,6 @@ class LinkerUserPhotoSerializer(serializers.ModelSerializer):
         fields = ('id', 'photo')
 
 class SubscriptionSerializer(serializers.ModelSerializer):
-    follower = serializers.HiddenField(default=serializers.CurrentUserDefault())
     
     class Meta:
         model = Subscription
