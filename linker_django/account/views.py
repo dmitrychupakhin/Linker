@@ -1,9 +1,17 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.permissions import *
 from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 from drf_spectacular.utils import extend_schema
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 from .models import *
 from .serializers import *
 from .permissions import *
@@ -155,3 +163,35 @@ class SubscribersDetailView(generics.RetrieveDestroyAPIView):
         self.check_object_permissions(self.request, obj=linker_user)
         obj = get_object_or_404(Subscription, id=subscription_id)  
         return obj
+
+@extend_schema(
+    description="Выход из системы.",
+    summary="Выход из системы.",
+    tags=["Account"]
+)   
+class LogoutView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@extend_schema(
+    description="Получение JWT access и refresh токена.",
+    summary="Получение JWT access и refresh токена.",
+    tags=["Account"]
+)   
+class LoginView(TokenObtainPairView):
+    pass
+
+@extend_schema(
+    description="Обновление JWT access и refresh токена.",
+    summary="Обновление JWT access и refresh токена.",
+    tags=["Account"]
+)   
+class RefreshLoginView(TokenRefreshView):
+    pass
